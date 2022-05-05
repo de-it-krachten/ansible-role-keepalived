@@ -2,13 +2,43 @@
 
 - name: Prepare
   hosts: all
+  # gather_facts: no
   become: yes
   vars:
     proxy_use: "{{ lookup('env', 'proxy_use') | default(False, True) | bool }}"
     proxy_url: "{{ lookup('env', 'proxy_url') | default('http://127.0.0.1:3128', True) }}"
     molecule_distro: "{{ lookup('env', 'MOLECULE_DISTRO') }}"
+    systemctl_alternative: False
     prepare_firewall: True
   tasks:
+
+    - block:
+
+        - name: Install python3
+          package:
+            name: python3
+            state: present
+
+        - name: install systemctl.py
+          get_url:
+            url: https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py
+            dest: /usr/bin/systemctl
+            mode: "0755"
+
+        - name: ensure run directory for ansible check_systemd
+          file:
+            name: /run/systemd/system/
+            state: directory
+            mode: "0755"
+
+        - name: check some service
+          service:
+            name: dbus
+            state: stopped
+          failed_when: false
+
+      when: systemctl_alternative|bool
+
 
     - block:
 
@@ -32,6 +62,7 @@
         - name: Install default packages
           package:
             name:
+              - netbase
               - gnupg
               - ssh
             state: present

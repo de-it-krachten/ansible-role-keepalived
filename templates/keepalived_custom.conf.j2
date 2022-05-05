@@ -15,8 +15,8 @@ vrrp_instance {{ item.name }} {
 
 {% if item.authentication is defined and item.authentication|bool %}
   authentication {
-    auth_type AH
-    auth_pass {{ item.pass }}
+    auth_type {{ item.auth_type }}
+    auth_pass {{ item.auth_pass }}
   }
 {% endif %}
 

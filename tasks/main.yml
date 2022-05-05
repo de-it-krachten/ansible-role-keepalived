@@ -43,18 +43,18 @@
     group: root
   notify: Restart keepalived
 
-- name: Create custom keepalived configuration
-  template:
-    src: templates/keepalived_custom.conf.j2
-    dest: /etc/keepalived/conf.d/{{ item.name }}.conf
-    owner: root
-    group: root
-    mode: "0640"
-  loop: "{{ keepalived_configs }}"
-  loop_control:
-    label:
-      - "{{ item.name }}"
-  notify: Restart keepalived
+# - name: Create custom keepalived configuration
+#   template:
+#     src: templates/keepalived_custom.conf.j2
+#     dest: /etc/keepalived/conf.d/{{ item.name }}.conf
+#     owner: root
+#     group: root
+#     mode: "0640"
+#   loop: "{{ keepalived_vrrp_instances }}"
+#   loop_control:
+#     label:
+#       - "{{ item.name }}"
+#   notify: Restart keepalived
 
 - name: Allow binding on non-local addresses
   sysctl:

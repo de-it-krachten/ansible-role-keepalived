@@ -3,17 +3,36 @@
 - name: Converge
   hosts: all
   vars:
-    keepalived_role: "{{ 'master' if inventory_hostname is search('node1') else 'backup' }}"
-    keepalived_configs:
+    keepalived_vrrp_sync_groups:
+      - name: SG1
+        members:
+          - vrrp1
+          - vrrp2
+    keepalived_vrrp_instances:
       - name: vrrp1
-        virtual_router_id: 1
+        options:
+          interface: eth0
+          virtual_router_id: 1
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.100
-        authentication: false
+        authentication: true
+        auth_type: PASS
+        auth_pass: TEST1
       - name: vrrp2
-        virtual_router_id: 2
+        options:
+          interface: eth0
+          virtual_router_id: 2
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.200
         authentication: true
-        pass: TEST
+        auth_type: AH
+        auth_pass: TEST2
   tasks:
     - name: Include role 'ansible-role-keepalived'
       include_role:

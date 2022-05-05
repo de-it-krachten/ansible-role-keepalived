@@ -7,13 +7,18 @@ generic:
   role_description: |
     Role for managing keepalived 
 
+github:
+  fail_fast: false
+
 molecule:
   prepare:
    vars:
      prepare_firewall: true
 
 ci_templates:
-  molecule.yml:
+  molecule.yml.j2:
     force: false
   converge.yml:
+    force: false
+  verify.yml:
     force: false

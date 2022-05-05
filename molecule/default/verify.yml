@@ -1,10 +1,87 @@
 ---
 # This is an example playbook to execute Ansible tests.
 
-- name: Verify
-  hosts: all
+- name: Verify master node
+  hosts: keepalived_master
+  gather_facts: true
+  tasks:
+    - name: Assertions master
+      assert:
+        that:
+          - "'172.17.0.100' in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+
+- name: Verify backup node
+  hosts: keepalived_backup
+  gather_facts: true
+  tasks:
+    - name: Assertions backup
+      assert:
+        that:
+          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+
+
+- name: Fail-over
+  hosts: keepalived_master
   gather_facts: false
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Stop keepalive
+      service:
+        name: keepalived
+        state: stopped
+    - name: Wait for 5 seconds
+      pause:
+        seconds: 5
+
+- name: Verify master node
+  hosts: keepalived_master
+  gather_facts: true
+  tasks:
+    - name: Assertions master
+      assert:
+        that:
+          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+
+- name: Verify backup node
+  hosts: keepalived_backup
+  gather_facts: true
+  tasks:
+    - name: Assertions backup
+      assert:
+        that:
+          - "'172.17.0.100' in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+
+- name: Fall-back
+  hosts: keepalived_master
+  gather_facts: false
+  tasks:
+    - name: Start keepalive
+      service:
+        name: keepalived
+        state: started
+    - name: Wait for 5 seconds
+      pause:
+        seconds: 5
+
+- name: Verify master node
+  hosts: keepalived_master
+  gather_facts: true
+  tasks:
+    - name: Assertions master
+      assert:
+        that:
+          - "'172.17.0.100' in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+
+- name: Verify backup node
+  hosts: keepalived_backup
+  gather_facts: true
+  tasks:
+    - name: Assertions backup
+      assert:
+        that:
+          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
