@@ -15,3 +15,5 @@ molecule:
 ci_templates:
   molecule.yml:
     force: false
+  converge.yml:
+    force: false
