@@ -42,6 +42,17 @@ Example Playbook
 - name: sample playbook for role 'keepalived'
   hosts: all
   vars:
+    keepalived_role: "{{ 'master' if inventory_hostname is search('node1') else 'backup }}"
+    keepalived_configs:
+      - name: vrrp1
+        virtual_router_id: 1
+        cluster_ip: 172.17.0.100
+        authentication: false
+      - name: vrrp2
+        virtual_router_id: 2
+        cluster_ip: 172.17.0.200
+        authentication: true
+        pass: TEST
   tasks:
     - name: Include role 'keepalived'
       include_role:

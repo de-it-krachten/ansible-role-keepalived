@@ -3,7 +3,7 @@
 - name: Converge
   hosts: all
   vars:
-    keepalived_role: "{{ 'master' if inventory_hostname is search('node1') else 'backup }}"
+    keepalived_role: "{{ 'master' if inventory_hostname is search('node1') else 'backup' }}"
     keepalived_configs:
       - name: vrrp1
         virtual_router_id: 1
