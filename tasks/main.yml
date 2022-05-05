@@ -1,0 +1,67 @@
+---
+
+- name: Load variables based on OS type
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "family-{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "family-{{ ansible_os_family }}.yml"
+        - default.yml
+      paths:
+        - "vars"
+
+- name: Install keepalived
+  package:
+    name: keepalived
+    state: present
+
+- name: Enable service at boot
+  service:
+    name: keepalived
+    enabled: yes
+
+- name: Create directory structure
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0750"
+  loop:
+    - /etc/keepalived
+    - /etc/keepalived/conf.d
+ 
+- name: Create default keepalived configuration
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    mode: "0640"
+    owner: root
+    group: root
+  notify: Restart keepalived
+
+- name: Create custom keepalived configuration
+  template:
+    src: templates/keepalived_custom.conf.j2
+    dest: /etc/keepalived/conf.d/{{ item.name }}.conf
+    owner: root
+    group: root
+    mode: "0640"
+  loop: "{{ keepalived_configs }}"
+  loop_control:
+    label:
+      - "{{ item.name }}"
+  notify: Restart keepalived
+
+- name: Allow binding on non-local addresses
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: "1"
+    sysctl_set: yes
+    state: present
+
+- name: Configure firewall
+  include_tasks: firewall.yml

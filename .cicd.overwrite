@@ -1,0 +1,17 @@
+---
+
+# Generic
+generic:
+  role: ansible-role-keepalived
+  role_short: keepalived
+  role_description: |
+    Role for managing keepalived 
+
+molecule:
+  prepare:
+   vars:
+     prepare_firewall: true
+
+ci_templates:
+  molecule.yml:
+    force: false

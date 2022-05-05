@@ -1,0 +1,28 @@
+vrrp_instance {{ item.name }} {
+
+  interface {{ item.interface|default(ansible_default_ipv4.interface) }}
+  virtual_router_id {{ item.virtual_router_id }}
+{% if keepalived_role == "master" %}
+  state MASTER
+  priority 150
+{% elif keepalived_role == "backup" %}
+  state BACKUP
+  priority 100
+  nopreempt
+{% endif %}
+  advert_int 1
+  version 2
+
+{% if item.authentication is defined and item.authentication|bool %}
+  authentication {
+    auth_type AH
+    auth_pass {{ item.pass }}
+  }
+{% endif %}
+
+  virtual_ipaddress {
+    {{ item.cluster_ip }} dev {{ item.interface|default(ansible_default_ipv4.interface) }}
+  }
+
+  # notify_master "/opt/keepalived/bin/haproxy-restart.sh"
+}

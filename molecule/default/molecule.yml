@@ -1,0 +1,57 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: keepalived-node1-${MOLECULE_DISTRO:-centos8}
+    # image: "${namespace:-'geerlingguy'}/${image:-'docker-rockylinux-ansible'}:${tag:-'latest'}"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+  - name: keepalived-node2-${MOLECULE_DISTRO:-centos8}
+    # image: "${namespace:-'geerlingguy'}/${image:-'docker-rockylinux-ansible'}:${tag:-'latest'}"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_PIPELINING: "True"
+  lint:
+    name: ansible-lint
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  inventory:
+    group_vars:
+      all:
+        keepalived_configs:
+          - name: vrrp1
+            virtual_router_id: 1
+            cluster_ip: 172.17.0.100
+            authentication: false
+          - name: vrrp2
+            virtual_router_id: 2
+            cluster_ip: 172.17.0.200
+            authentication: true
+            pass: TEST
+    host_vars:
+      keepalived-node1-${MOLECULE_DISTRO:-centos8}:
+        keepalived_role: master
+      keepalived-node2-${MOLECULE_DISTRO:-centos8}:
+        keepalived_role: backup
+scenario:
+  name: default
+verifier:
+  name: ansible

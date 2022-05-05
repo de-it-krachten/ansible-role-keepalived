@@ -1,0 +1,29 @@
+---
+
+- name: Identify the firewall used
+  include_role:
+    name: firewall
+    tasks_from: identify.yml
+
+- name: Enable VRRP (firewalld)
+  firewalld:
+    rich_rule: rule protocol value="vrrp" accept
+    permanent: yes
+    state: enabled
+  notify: Restart firewalld
+  when: firewall_type == 'firewalld'
+
+- name: Enable VRRP (iptables)
+  iptables:
+    chain: INPUT
+    protocol: vrrp
+    destination: "{{ keepalived_broadcast }}"
+    jump: ACCEPT
+  when: firewall_type == 'iptables'
+
+- name: Enable VRRP (ufw)
+  ufw:
+    rule: allow
+    dest: "{{ keepalived_broadcast }}"
+    comment: 'VRRP Broadcast'
+  when: firewall_type == 'ufw'

@@ -1,0 +1,7 @@
+---
+
+# VRRP broadcast network address
+keepalived_broadcast: '224.0.0.0/8'
+
+# list of vrrp
+keepalived_configs: []
