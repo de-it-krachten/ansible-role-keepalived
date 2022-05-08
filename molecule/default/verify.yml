@@ -62,9 +62,9 @@
         name: keepalived
         state: stopped
 
-    - name: Wait for 5 seconds
+    - name: Wait for 10 seconds
       pause:
-        seconds: 5
+        seconds: 10
 
 - name: Verify master node
   hosts: keepalived_master
@@ -107,9 +107,9 @@
         name: keepalived
         state: started
 
-    - name: Wait for 5 seconds
+    - name: Wait for 10 seconds
       pause:
-        seconds: 5
+        seconds: 10
 
 - name: Verify master node
   hosts: keepalived_master
