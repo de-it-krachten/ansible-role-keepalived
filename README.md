@@ -41,13 +41,16 @@ keepalived_vrrp_sync_groups: []
 # keepalive role based on ansible role
 keepalived_role: "{{ 'master' if (inventory_hostname in groups['keepalived_master']) else 'backup' }}"
 
+# User for running keepalived script
+keepalived_script_user: keepalived_script
+
 # global options
 keepalived_global_options:
   vrrp_skip_check_adv_addr:
   vrrp_garp_interval: 0
   vrrp_gna_interval: 0
   enable_script_security:
-  script_user: keepalived
+  script_user: "{{ keepalived_script_user }}"
 
 keepalived_vrrp_scripts:
   - name: chk_haproxy
@@ -72,13 +75,25 @@ Example Playbook
           - vrrp2
     keepalived_vrrp_instances:
       - name: vrrp1
-        virtual_router_id: 1
+        options:
+          interface: eth0
+          virtual_router_id: 1
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.100
         authentication: true
         auth_type: PASS
         auth_pass: TEST1
       - name: vrrp2
-        virtual_router_id: 2
+        options:
+          interface: eth0
+          virtual_router_id: 2
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.200
         authentication: true
         auth_type: AH

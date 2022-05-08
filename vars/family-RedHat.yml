@@ -1,5 +1,6 @@
 ---
 
 keepalived_packages:
+  - ipvsadm
   - keepalived
   - procps

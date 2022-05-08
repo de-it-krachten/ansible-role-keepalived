@@ -1,20 +1,78 @@
 ---
-# This is an example playbook to execute Ansible tests.
+
+- name: Pre checks
+  hosts: all
+  tasks:
+    
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Identity firewall used
+      include_role:
+        name: firewall
+        tasks_from: identify.yml
+
+    - block:
+ 
+        - name: Get all iptables rules
+          command: iptables -L
+          changed_when: false
+          failed_when: false
+          register: _iptables
+
+        - name: Show all iptables rules
+          debug:
+            var: _iptables.stdout_lines
+
+      when: firewall_type == 'iptables'
+
 
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
 
+
 - name: Verify backup node
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions backup
       assert:
         that:
@@ -26,60 +84,129 @@
   hosts: keepalived_master
   gather_facts: false
   tasks:
+
     - name: Stop keepalive
       service:
         name: keepalived
         state: stopped
-    - name: Wait for 5 seconds
+
+    - name: Wait for 10 seconds
       pause:
-        seconds: 5
+        seconds: 10
+
 
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' not in ansible_all_ipv4_addresses"
           - "'172.17.0.200' not in ansible_all_ipv4_addresses"
 
+
 - name: Verify backup node
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions backup
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
 
+
 - name: Fall-back
   hosts: keepalived_master
   gather_facts: false
   tasks:
+
     - name: Start keepalive
       service:
         name: keepalived
         state: started
-    - name: Wait for 5 seconds
+
+    - name: Wait for 10 seconds
       pause:
-        seconds: 5
+        seconds: 10
+
 
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
 
+
 - name: Verify backup node
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions backup
       assert:
         that:

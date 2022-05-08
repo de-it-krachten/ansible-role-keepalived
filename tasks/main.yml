@@ -23,6 +23,14 @@
     name: keepalived
     enabled: yes
 
+- name: Create keepalived_script user
+  user:
+    name: "{{ keepalived_script_user }}"
+    comment: "User to execute keepalived check scripts"
+    shell: /sbin/nologin
+    expires: -1
+    create_home: no
+
 - name: Create directory structure
   file:
     path: "{{ item }}"
