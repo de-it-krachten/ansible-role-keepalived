@@ -72,13 +72,25 @@ Example Playbook
           - vrrp2
     keepalived_vrrp_instances:
       - name: vrrp1
-        virtual_router_id: 1
+        options:
+          interface: eth0
+          virtual_router_id: 1
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.100
         authentication: true
         auth_type: PASS
         auth_pass: TEST1
       - name: vrrp2
-        virtual_router_id: 2
+        options:
+          interface: eth0
+          virtual_router_id: 2
+          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
+          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          advert_int: 1
+          version: 2
         cluster_ip: 172.17.0.200
         authentication: true
         auth_type: AH
