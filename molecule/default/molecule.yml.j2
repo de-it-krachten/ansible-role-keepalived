@@ -17,8 +17,11 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+    # pre_build_image: false
     groups:
       - keepalived_master
+    packages:
+      - python3
   - name: keepalived-backup-{{ platform }}
     image: "geerlingguy/docker-{{ platform }}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
@@ -26,8 +29,11 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+    # pre_build_image: false
     groups:
       - keepalived_backup
+    packages:
+      - python3
 {% endfor %}
 provisioner:
   name: ansible

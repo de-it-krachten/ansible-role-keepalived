@@ -1,33 +1,5 @@
 ---
 
-- name: Pre checks
-  hosts: all
-  tasks:
-    
-    - name: Show all IP addresses
-      debug:
-        var: ansible_all_ipv4_addresses
-
-    - name: Identity firewall used
-      include_role:
-        name: firewall
-        tasks_from: identify.yml
-
-    - block:
- 
-        - name: Get all iptables rules
-          command: iptables -L
-          changed_when: false
-          failed_when: false
-          register: _iptables
-
-        - name: Show all iptables rules
-          debug:
-            var: _iptables.stdout_lines
-
-      when: firewall_type == 'iptables'
-
-
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
@@ -37,22 +9,11 @@
       debug:
         var: ansible_all_ipv4_addresses
 
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
-
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
-
 
 - name: Verify backup node
   hosts: keepalived_backup
@@ -62,16 +23,6 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
-
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:
@@ -104,16 +55,6 @@
       debug:
         var: ansible_all_ipv4_addresses
 
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
-
     - name: Assertions master
       assert:
         that:
@@ -129,16 +70,6 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
-
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:
@@ -171,16 +102,6 @@
       debug:
         var: ansible_all_ipv4_addresses
 
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
-
     - name: Assertions master
       assert:
         that:
@@ -196,16 +117,6 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
-
-    - name: Get keepalived logging
-      command: journalctl -u keepalived
-      changed_when: false
-      failed_when: false
-      register: _journalctl
-
-    - name: Show keepalived logging
-      debug:
-        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:

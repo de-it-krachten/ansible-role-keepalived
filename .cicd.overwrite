@@ -22,3 +22,36 @@ ci_templates:
     force: false
   verify.yml:
     force: false
+
+# molecule
+molecule:
+  active: true
+  platforms:
+    - rockylinux8
+    - debian10
+    - debian11
+    - ubuntu2004
+    - ubuntu2204
+  prepare:
+    vars:
+      prepare_firewall: true
+
+# Supported platforms
+platforms:
+  - name: Red Hat Enterprise Linux 7
+    ci: false
+  - name: Red Hat Enterprise Linux 8
+    ci: false
+  - name: RockyLinux 8
+    image: rockylinux8
+  - name: AlmaLinux 8
+    image: almalinux8
+    ci: false
+  - name: Debian 10 (Buster)
+    image: debian10
+  - name: Debian 11 (Bullseye)
+    image: debian11
+  - name: Ubuntu 20.04 LTS
+    image: ubuntu2004
+  - name: Ubuntu 22.04 LTS
+    image: ubuntu2204
