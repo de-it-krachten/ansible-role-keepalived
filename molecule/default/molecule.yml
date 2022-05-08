@@ -10,8 +10,8 @@ lint: |
   ansible-lint
 platforms:
 
-  - name: keepalived-master-ubuntu1804
-    image: "geerlingguy/docker-ubuntu1804-ansible:latest"
+  - name: keepalived-master-centos7
+    image: "geerlingguy/docker-centos7-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -19,8 +19,8 @@ platforms:
     pre_build_image: true
     groups:
       - keepalived_master
-  - name: keepalived-backup-ubuntu1804
-    image: "geerlingguy/docker-ubuntu1804-ansible:latest"
+  - name: keepalived-backup-centos7
+    image: "geerlingguy/docker-centos7-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

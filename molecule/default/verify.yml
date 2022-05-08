@@ -27,6 +27,7 @@
 
       when: firewall_type == 'iptables'
 
+
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
@@ -36,11 +37,22 @@
       debug:
         var: ansible_all_ipv4_addresses
 
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
+
 
 - name: Verify backup node
   hosts: keepalived_backup
@@ -50,6 +62,16 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:
@@ -72,6 +94,7 @@
       pause:
         seconds: 10
 
+
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
@@ -81,11 +104,22 @@
       debug:
         var: ansible_all_ipv4_addresses
 
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' not in ansible_all_ipv4_addresses"
           - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+
 
 - name: Verify backup node
   hosts: keepalived_backup
@@ -95,6 +129,16 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:
@@ -117,6 +161,7 @@
       pause:
         seconds: 10
 
+
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
@@ -126,11 +171,22 @@
       debug:
         var: ansible_all_ipv4_addresses
 
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
+
     - name: Assertions master
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
+
 
 - name: Verify backup node
   hosts: keepalived_backup
@@ -140,6 +196,16 @@
     - name: Show all IP addresses
       debug:
         var: ansible_all_ipv4_addresses
+
+    - name: Get keepalived logging
+      command: journalctl -u keepalived
+      changed_when: false
+      failed_when: false
+      register: _journalctl
+
+    - name: Show keepalived logging
+      debug:
+        var: _journalctl.stdout_lines
 
     - name: Assertions backup
       assert:
