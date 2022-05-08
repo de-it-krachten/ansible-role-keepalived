@@ -2,15 +2,24 @@
 
 - name: Prepare
   hosts: all
-  # gather_facts: no
   become: yes
   vars:
     proxy_use: "{{ lookup('env', 'proxy_use') | default(False, True) | bool }}"
     proxy_url: "{{ lookup('env', 'proxy_url') | default('http://127.0.0.1:3128', True) }}"
-    molecule_distro: "{{ lookup('env', 'MOLECULE_DISTRO') }}"
+    # molecule_distro: "{{ lookup('env', 'MOLECULE_DISTRO') }}"
     systemctl_alternative: False
     prepare_firewall: True
   tasks:
+
+    - name: Define molecule distro (Ubuntu)
+      set_fact:
+        molecule_distro: "{{ (ansible_distribution|lower) + (ansible_distribution_version|regex_replace('\\.')) }}"
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Define molecule distro (Rest)
+      set_fact:
+        molecule_distro: "{{ (ansible_distribution|lower) + ansible_distribution_major_version }}"
+      when: ansible_distribution != 'Ubuntu'
 
     - block:
 

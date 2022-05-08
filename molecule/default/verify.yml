@@ -1,10 +1,35 @@
 ---
-# This is an example playbook to execute Ansible tests.
+
+- name: Pre checks
+  hosts: all
+  tasks:
+    
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
+    - name: Identify firewall
+      include_role:
+        name: firewall
+        tasks_from: identify
+    
+    - block:
+ 
+        - name: Get all iptables rules
+          command: iptables -L
+          register: _iptables
+
+        - name: Show all iptables rules
+          debug:
+            var: _iptables.stdout
+
+      when: firewall_type == 'iptables'
 
 - name: Verify master node
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
     - name: Assertions master
       assert:
         that:

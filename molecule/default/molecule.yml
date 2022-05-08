@@ -1,0 +1,47 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+
+  - name: keepalived-master-ubuntu1804
+    image: "geerlingguy/docker-ubuntu1804-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    groups:
+      - keepalived_master
+  - name: keepalived-backup-ubuntu1804
+    image: "geerlingguy/docker-ubuntu1804-ansible:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    groups:
+      - keepalived_backup
+
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_PIPELINING: "True"
+  lint:
+    name: ansible-lint
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  inventory:
+    host_vars:
+      keepalived-rockylinux8:
+        ansible_python_interpreter: /usr/libexec/platform-python
+scenario:
+  name: default
+verifier:
+  name: ansible
