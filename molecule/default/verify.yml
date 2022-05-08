@@ -8,11 +8,6 @@
       debug:
         var: ansible_all_ipv4_addresses
 
-    - name: Identify firewall
-      include_role:
-        name: firewall
-        tasks_from: identify
-    
     - block:
  
         - name: Get all iptables rules
@@ -22,7 +17,7 @@
 
         - name: Show all iptables rules
           debug:
-            var: _iptables.stdout
+            var: _iptables.stdout_lines
 
       when: firewall_type == 'iptables'
 
@@ -30,6 +25,10 @@
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
 
     - name: Assertions master
       assert:
@@ -41,6 +40,11 @@
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
     - name: Assertions backup
       assert:
         that:
@@ -52,10 +56,12 @@
   hosts: keepalived_master
   gather_facts: false
   tasks:
+
     - name: Stop keepalive
       service:
         name: keepalived
         state: stopped
+
     - name: Wait for 5 seconds
       pause:
         seconds: 5
@@ -64,6 +70,11 @@
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
     - name: Assertions master
       assert:
         that:
@@ -74,20 +85,28 @@
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
     - name: Assertions backup
       assert:
         that:
           - "'172.17.0.100' in ansible_all_ipv4_addresses"
           - "'172.17.0.200' in ansible_all_ipv4_addresses"
 
+
 - name: Fall-back
   hosts: keepalived_master
   gather_facts: false
   tasks:
+
     - name: Start keepalive
       service:
         name: keepalived
         state: started
+
     - name: Wait for 5 seconds
       pause:
         seconds: 5
@@ -96,6 +115,11 @@
   hosts: keepalived_master
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
     - name: Assertions master
       assert:
         that:
@@ -106,6 +130,11 @@
   hosts: keepalived_backup
   gather_facts: true
   tasks:
+
+    - name: Show all IP addresses
+      debug:
+        var: ansible_all_ipv4_addresses
+
     - name: Assertions backup
       assert:
         that:
