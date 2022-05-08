@@ -13,13 +13,16 @@ keepalived_vrrp_sync_groups: []
 # keepalive role based on ansible role
 keepalived_role: "{{ 'master' if (inventory_hostname in groups['keepalived_master']) else 'backup' }}"
 
+# User for running keepalived script
+keepalived_script_user: keepalived_script
+
 # global options
 keepalived_global_options:
   vrrp_skip_check_adv_addr:
   vrrp_garp_interval: 0
   vrrp_gna_interval: 0
   enable_script_security:
-  script_user: keepalived
+  script_user: "{{ keepalived_script_user }}"
 
 keepalived_vrrp_scripts:
   - name: chk_haproxy
