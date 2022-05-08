@@ -8,11 +8,17 @@
       debug:
         var: ansible_all_ipv4_addresses
 
+    - name: Identity firewall used
+      include_role:
+        name: firewall
+        tasks_from: identify.yml
+
     - block:
  
         - name: Get all iptables rules
           command: iptables -L
           changed_when: false
+          failed_when: false
           register: _iptables
 
         - name: Show all iptables rules
