@@ -17,6 +17,7 @@
  
         - name: Get all iptables rules
           command: iptables -L
+          changed_when: false
           register: _iptables
 
         - name: Show all iptables rules
