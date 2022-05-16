@@ -9,22 +9,32 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: keepalived-node1-${MOLECULE_DISTRO:-centos8}
-    # image: "${namespace:-'geerlingguy'}/${image:-'docker-rockylinux-ansible'}:${tag:-'latest'}"
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
+{% for platform in MOLECULE_DISTROS %}
+  - name: keepalived-master-{{ platform }}
+    image: "geerlingguy/docker-{{ platform }}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-  - name: keepalived-node2-${MOLECULE_DISTRO:-centos8}
-    # image: "${namespace:-'geerlingguy'}/${image:-'docker-rockylinux-ansible'}:${tag:-'latest'}"
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos8}-ansible:latest"
+    # pre_build_image: false
+    groups:
+      - keepalived_master
+    packages:
+      - python3
+  - name: keepalived-backup-{{ platform }}
+    image: "geerlingguy/docker-{{ platform }}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
+    # pre_build_image: false
+    groups:
+      - keepalived_backup
+    packages:
+      - python3
+{% endfor %}
 provisioner:
   name: ansible
   env:
@@ -33,6 +43,10 @@ provisioner:
     name: ansible-lint
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+  inventory:
+    host_vars:
+      keepalived-rockylinux8:
+        ansible_python_interpreter: /usr/libexec/platform-python
 scenario:
   name: default
 verifier:

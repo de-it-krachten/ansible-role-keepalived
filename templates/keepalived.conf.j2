@@ -1,29 +1,54 @@
-! Configuration File for keepalived
+# Configuration File for keepalived
 
+# Global options
 global_defs {
-	# VRRP params
-	vrrp_skip_check_adv_addr
-	vrrp_garp_interval 0
-	vrrp_gna_interval 0
-
-	# Don't run scripts configured to be run as root if any part of the path
-	# is writable by a non-root user.
-	enable_script_security
-
-  # script_user keepalived_script
-
+{% for key, value in keepalived_global_options.items() %}
+  {{ key }} {{ value }}
+{% endfor %}
 }
 
-# Adds a script to be executed periodically. Its exit code will be
-# recorded for all VRRP instances which are monitoring it.
-vrrp_script chk_haproxy {
-	script "/sbin/pidof haproxy"
-	user root
-	interval 5
-	init_fail
+# VRRP scripts
+{% for script in keepalived_vrrp_scripts %}
+vrrp_script {{ script.name }} {
+{% for key, value in script.options.items() %}
+  {{ key }} {{ value }}
+{% endfor %}
 }
 
-# Include application configs
-{% for item in keepalived_configs %}
-include /etc/keepalived/conf.d/{{ item.name }}.conf
+{% endfor %}
+
+# VRRP sync groups
+{% for item in keepalived_vrrp_sync_groups %}
+vrrp_sync_group {{ item.name }} {
+  group {
+{% for item2 in item.members %}
+    {{ item2 }}
+{% endfor %}
+  }
+}
+
+{% endfor %}
+
+# VRRP instances
+{% for instance in keepalived_vrrp_instances %}
+vrrp_instance {{ instance.name }} {
+
+{% for key, value in instance.options.items() %}
+  {{ key }} {{ value }}
+{% endfor %}
+
+{% if instance.authentication is defined and instance.authentication|bool %}
+  authentication {
+    auth_type {{ instance.auth_type }}
+    auth_pass {{ instance.auth_pass }}
+  }
+{% endif %}
+
+  virtual_ipaddress {
+    {{ instance.cluster_ip }} dev {{ instance.interface|default(ansible_default_ipv4.interface) }}
+  }
+
+  # notify_master "/opt/keepalived/bin/haproxy-restart.sh"
+}
+
 {% endfor %}

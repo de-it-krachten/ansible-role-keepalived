@@ -2,3 +2,4 @@
 
 keepalived_packages:
   - keepalived
+  - procps

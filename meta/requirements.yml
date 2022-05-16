@@ -1,7 +1,5 @@
 ---
 
-roles:
-
   - name: firewall
     src: https://github.com/de-it-krachten/ansible-role-firewall.git
     version: main
