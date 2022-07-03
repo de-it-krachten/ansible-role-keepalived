@@ -7,6 +7,26 @@ generic:
   role_description: |
     Role for managing keepalived 
 
+platforms:
+  rhel7:
+    ci: false
+    supported: false
+  centos7:
+    ci: false
+    supported: false
+  debian10:
+    ci: false
+    supported: false
+  ubuntu1804:
+    ci: false
+    supported: false
+  fedora35:
+    ci: false
+    supported: false
+  fedora36:
+    ci: false
+    supported: false
+
 molecule:
   prepare:
    vars:
