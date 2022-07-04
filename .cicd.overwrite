@@ -37,5 +37,3 @@ ci_templates:
     force: false
   converge.yml:
     force: false
-  verify.yml:
-    force: false
