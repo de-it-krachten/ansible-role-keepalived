@@ -10,8 +10,8 @@ lint: |
   ansible-lint
 platforms:
 {% for platform in MOLECULE_DISTROS %}
-  - name: keepalived-master-{{ platform }}
-    image: "geerlingguy/docker-{{ platform }}-ansible:latest"
+  - name: keepalived-master-{{ platform.name }}
+    image: "{{ platform.image }}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
@@ -22,8 +22,8 @@ platforms:
       - keepalived_master
     packages:
       - python3
-  - name: keepalived-backup-{{ platform }}
-    image: "geerlingguy/docker-{{ platform }}-ansible:latest"
+  - name: keepalived-backup-{{ platform.name }}
+    image: "{{ platform.image }}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

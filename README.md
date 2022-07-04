@@ -6,16 +6,16 @@
 Role for managing keepalived 
 
 
-Platforms
---------------
+## Platforms
 
 Supported platforms
 
-- Red Hat Enterprise Linux 7<sup>1</sup>
 - Red Hat Enterprise Linux 8<sup>1</sup>
+- Red Hat Enterprise Linux 9<sup>1</sup>
 - RockyLinux 8
-- AlmaLinux 8<sup>1</sup>
-- Debian 10 (Buster)
+- OracleLinux 8
+- AlmaLinux 8
+- AlmaLinux 9
 - Debian 11 (Bullseye)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
@@ -23,8 +23,8 @@ Supported platforms
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
 
-Role Variables
---------------
+## Role Variables
+### defaults/main.yml
 <pre><code>
 # VRRP broadcast network address
 keepalived_broadcast: '224.0.0.0/8'
@@ -58,10 +58,25 @@ keepalived_vrrp_scripts:
       init_fail:
 </pre></code>
 
+### vars/family-RedHat.yml
+<pre><code>
+keepalived_packages:
+  - ipvsadm
+  - keepalived
+  - procps
+</pre></code>
 
-Example Playbook
-----------------
+### vars/family-Debian.yml
+<pre><code>
+keepalived_packages:
+  - keepalived
+  - procps
+</pre></code>
 
+
+
+## Example Playbook
+### molecule/default/converge.yml
 <pre><code>
 - name: sample playbook for role 'keepalived'
   hosts: all
