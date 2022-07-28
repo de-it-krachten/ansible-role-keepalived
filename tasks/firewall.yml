@@ -5,7 +5,8 @@
     name: firewall
     tasks_from: identify.yml
 
-- block:
+- name: Section firewalld
+  block:
 
     - name: Enable AH (firewalld)
       firewalld:
@@ -23,7 +24,8 @@
 
   when: firewall_type == 'firewalld'
 
-- block:
+- name: Section iptables
+  block:
 
     - name: Enable AH (iptables)
       iptables:
@@ -40,7 +42,8 @@
   when: firewall_type == 'iptables'
 
 
-- block:
+- name: Section ufw
+  block:
 
     - name: Enable VRRP & AH (ufw)
       ufw:
