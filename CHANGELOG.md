@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.0.0...v1.1.0) (2022-07-28)
+
+
+### Features
+
+* Implement ansible-lint v6 support ([58ed581](https://github.com/de-it-krachten/ansible-role-keepalived/commit/58ed5819dadca5f0c3b072eb947baf2f5b9937e1))
+
 # 1.0.0 (2022-05-16)
 
 
