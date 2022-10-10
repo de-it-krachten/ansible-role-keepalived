@@ -1,54 +1,50 @@
 ---
 
 - name: Identify the firewall used
-  include_role:
+  ansible.builtin.include_role:
     name: firewall
     tasks_from: identify.yml
 
 - name: Section firewalld
+  when: firewall_type == 'firewalld'
   block:
 
     - name: Enable AH (firewalld)
-      firewalld:
+      ansible.posix.firewalld:
         rich_rule: rule protocol value="ah" accept
         permanent: yes
         state: enabled
       notify: Restart firewalld
 
     - name: Enable VRRP (firewalld)
-      firewalld:
+      ansible.posix.firewalld:
         rich_rule: rule protocol value="vrrp" accept
         permanent: yes
         state: enabled
       notify: Restart firewalld
 
-  when: firewall_type == 'firewalld'
-
 - name: Section iptables
+  when: firewall_type == 'iptables'
   block:
 
     - name: Enable AH (iptables)
-      iptables:
+      ansible.builtin.iptables:
         chain: INPUT
         protocol: ah
         jump: ACCEPT
 
     - name: Enable VRRP (iptables)
-      iptables:
+      ansible.builtin.iptables:
         chain: INPUT
         protocol: vrrp
         jump: ACCEPT
 
-  when: firewall_type == 'iptables'
-
-
 - name: Section ufw
+  when: firewall_type == 'ufw'
   block:
 
     - name: Enable VRRP & AH (ufw)
-      ufw:
+      community.general.ufw:
         rule: allow
         dest: "{{ keepalived_broadcast }}"
         comment: 'VRRP Broadcast'
-
-  when: firewall_type == 'ufw'
