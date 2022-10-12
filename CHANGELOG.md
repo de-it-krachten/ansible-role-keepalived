@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.1.0...v1.2.0) (2022-10-12)
+
+
+### Features
+
+* Move to FQCN ([59ed8ea](https://github.com/de-it-krachten/ansible-role-keepalived/commit/59ed8ea91968d02ed27c41c6840b9e665dfa587a))
+* Update CI to latest standards ([15593ac](https://github.com/de-it-krachten/ansible-role-keepalived/commit/15593ac39979df8dab9a03cd652dd3df5338325b))
+
 # [1.1.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.0.0...v1.1.0) (2022-07-28)
 
 
