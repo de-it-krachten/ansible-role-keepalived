@@ -6,6 +6,17 @@
 Role for managing keepalived 
 
 
+
+## Dependencies
+
+#### Roles
+None
+
+#### Collections
+- community.general
+- ansible.posix
+- community.general
+
 ## Platforms
 
 Supported platforms
@@ -58,6 +69,7 @@ keepalived_vrrp_scripts:
       interval: 5
       init_fail:
 </pre></code>
+
 
 ### vars/family-RedHat.yml
 <pre><code>
