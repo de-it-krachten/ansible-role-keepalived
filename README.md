@@ -15,7 +15,6 @@ None
 #### Collections
 - community.general
 - ansible.posix
-- community.general
 
 ## Platforms
 
@@ -26,6 +25,7 @@ Supported platforms
 - RockyLinux 8
 - RockyLinux 9
 - OracleLinux 8
+- OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
 - Debian 11 (Bullseye)
