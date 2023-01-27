@@ -2,7 +2,7 @@
 
 - name: Identify the firewall used
   ansible.builtin.include_role:
-    name: firewall
+    name: deitkrachten.firewall
     tasks_from: identify.yml
 
 - name: Section firewalld
