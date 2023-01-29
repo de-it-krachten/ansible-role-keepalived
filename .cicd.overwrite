@@ -20,10 +20,10 @@ platforms:
   ubuntu1804:
     ci: false
     supported: false
-  fedora35:
+  fedora36:
     ci: false
     supported: false
-  fedora36:
+  fedora37:
     ci: false
     supported: false
 
@@ -31,9 +31,20 @@ molecule:
   prepare:
    vars:
      prepare_firewall: true
+  nodes:
+    - name: master
+      groups:
+        - keepalived_master
+      packages:
+        - python3 
+    - name: backup
+      groups:
+        - keepalived_backup
+      packages:
+        - python3 
 
 ci_templates:
-  molecule.yml.j2:
-    force: false
+#  molecule.yml.j2:
+#    force: false
   converge.yml:
     force: false
