@@ -71,17 +71,17 @@ keepalived_vrrp_scripts:
 </pre></code>
 
 
-### vars/family-RedHat.yml
+### vars/family-Debian.yml
 <pre><code>
 keepalived_packages:
-  - ipvsadm
   - keepalived
   - procps
 </pre></code>
 
-### vars/family-Debian.yml
+### vars/family-RedHat.yml
 <pre><code>
 keepalived_packages:
+  - ipvsadm
   - keepalived
   - procps
 </pre></code>
