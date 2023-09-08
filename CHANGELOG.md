@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.3.0...v1.4.0) (2023-09-08)
+
+
+### Bug Fixes
+
+* Fix loop label to string ([d4b3cb5](https://github.com/de-it-krachten/ansible-role-keepalived/commit/d4b3cb50e3f252fed6db8f62e96cef3fedc8759e))
+
+
+### Features
+
+* Update supported platforms & CI ([402e2fd](https://github.com/de-it-krachten/ansible-role-keepalived/commit/402e2fd287a38e269773db20b4b9fbb118358b27))
+
 # [1.3.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.2.0...v1.3.0) (2023-01-29)
 
 
