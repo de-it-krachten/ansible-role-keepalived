@@ -28,7 +28,10 @@ Supported platforms
 - OracleLinux 9
 - AlmaLinux 8
 - AlmaLinux 9
+- SUSE Linux Enterprise 15<sup>1</sup>
+- openSUSE Leap 15
 - Debian 11 (Bullseye)
+- Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
 
@@ -70,21 +73,21 @@ keepalived_vrrp_scripts:
       init_fail:
 </pre></code>
 
-
-### vars/family-Debian.yml
+### defaults/family-Debian.yml
 <pre><code>
 keepalived_packages:
   - keepalived
   - procps
 </pre></code>
 
-### vars/family-RedHat.yml
+### defaults/family-RedHat.yml
 <pre><code>
 keepalived_packages:
   - ipvsadm
   - keepalived
   - procps
 </pre></code>
+
 
 
 
