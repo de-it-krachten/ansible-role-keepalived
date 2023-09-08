@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.4.0...v1.4.1) (2023-09-08)
+
+
+### Bug Fixes
+
+* Remove initial support for SLES/OpenSUSE ([9f89747](https://github.com/de-it-krachten/ansible-role-keepalived/commit/9f897471f9bcc6fdcc78e3e2e889969f40a758fc))
+
 # [1.4.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.3.0...v1.4.0) (2023-09-08)
 
 
