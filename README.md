@@ -13,8 +13,8 @@ Role for managing keepalived
 None
 
 #### Collections
-- community.general
 - ansible.posix
+- community.general
 
 ## Platforms
 
@@ -33,6 +33,7 @@ Supported platforms
 - Debian 12 (Bookworm)
 - Ubuntu 20.04 LTS
 - Ubuntu 22.04 LTS
+- Ubuntu 24.04 LTS
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
@@ -106,8 +107,8 @@ keepalived_packages:
         options:
           interface: eth0
           virtual_router_id: 1
-          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
-          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          state: '{{ ''MASTER'' if keepalived_role == ''master'' else ''BACKUP'' }}'
+          priority: '{{ 150 if keepalived_role == ''master'' else 100 }}'
           advert_int: 1
           version: 2
         cluster_ip: 172.17.0.100
@@ -118,8 +119,8 @@ keepalived_packages:
         options:
           interface: eth0
           virtual_router_id: 2
-          state: "{{ 'MASTER' if keepalived_role == 'master' else 'BACKUP' }}"
-          priority: "{{ 150 if keepalived_role == 'master' else 100 }}"
+          state: '{{ ''MASTER'' if keepalived_role == ''master'' else ''BACKUP'' }}'
+          priority: '{{ 150 if keepalived_role == ''master'' else 100 }}'
           advert_int: 1
           version: 2
         cluster_ip: 172.17.0.200
