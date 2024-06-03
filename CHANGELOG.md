@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.4.1...v1.5.0) (2024-06-03)
+
+
+### Features
+
+* Add support for Ubuntu 24.04 LTS + Fedora 40 ([a2c187d](https://github.com/de-it-krachten/ansible-role-keepalived/commit/a2c187df9233c28c0c1a01448e0a10224ba7467b))
+
 ## [1.4.1](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.4.0...v1.4.1) (2023-09-08)
 
 
