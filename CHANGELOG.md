@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.5.0...v1.6.0) (2024-12-29)
+
+
+### Features
+
+* Update supported platforms & CI ([aebb370](https://github.com/de-it-krachten/ansible-role-keepalived/commit/aebb3703d7773f863170f4ca628e7070f24ba9a4))
+
 # [1.5.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.4.1...v1.5.0) (2024-06-03)
 
 
