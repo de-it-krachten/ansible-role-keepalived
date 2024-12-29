@@ -1,5 +1,5 @@
 *.err
 *.bak
 .converted
-molecule/default/molecule.yml
+#molecule/default/molecule.yml
 defaults/defaults-*
