@@ -3,7 +3,7 @@
 dependency:
   name: galaxy
 driver:
-  name: hetznercloud
+  name: molecule_hetznercloud
 lint: |
   set -e
   yamllint .
@@ -13,12 +13,12 @@ lint: |
 platforms:
 {% for platform in MOLECULE_DISTROS %}
   - name: keepalived-{{ platform.name }}-master
-    server_type: "{{ platform.server_type | default('cx11') }}"
+    server_type: "{{ platform.server_type | default('cx22') }}"
     image: "{{ platform.image }}"
     location: "{{ platform.location | default('hel1') }}"
     groups: ['keepalived_master']
   - name: keepalived-{{ platform.name }}-backup
-    server_type: "{{ platform.server_type | default('cx11') }}"
+    server_type: "{{ platform.server_type | default('cx22') }}"
     image: "{{ platform.image }}"
     location: "{{ platform.location | default('hel1') }}"
     groups: ['keepalived_backup']
