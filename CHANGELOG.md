@@ -1,3 +1,14 @@
+# [1.7.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.6.0...v1.7.0) (2025-08-06)
+
+
+### Features
+
+* Add support for AlmaLinux 10 ([fbb6c5e](https://github.com/de-it-krachten/ansible-role-keepalived/commit/fbb6c5eb9bfa88b21e4fe04e99407e80dd772355))
+* Add support for Debian 13 (Trixie) ([505e648](https://github.com/de-it-krachten/ansible-role-keepalived/commit/505e648fcf7fdddf8dd98df5f223ee2ea9445134))
+* Add support for OracleLinux 10 ([ee50195](https://github.com/de-it-krachten/ansible-role-keepalived/commit/ee501952cc3fb3598c5c55fd96e95cd29b9dda3e))
+* Add support for Red Hat Enterprise Linux 10 ([4a7a18d](https://github.com/de-it-krachten/ansible-role-keepalived/commit/4a7a18da39867afb545e40eb5d840662175580de))
+* Add support for RockyLinux 10 ([0e94f1c](https://github.com/de-it-krachten/ansible-role-keepalived/commit/0e94f1cf2291a25cec3a2cfd62078eecbeb19e93))
+
 # [1.6.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.5.0...v1.6.0) (2024-12-29)
 
 
