@@ -3,6 +3,12 @@
 - name: Load variables based on OS type
   ansible.builtin.include_tasks: vars.yml
 
+- name: Configure sysctl settings
+  ansible.builtin.include_role:
+    name: deitkrachten.sysctl
+  vars:
+    sysctl_settings: "{{ keepalived_sysctl_settings }}"
+
 - name: Install keepalived
   ansible.builtin.package:
     name: keepalived
@@ -53,13 +59,6 @@
 #     label:
 #       - "{{ item.name }}"
 #   notify: Restart keepalived
-
-- name: Allow binding on non-local addresses
-  ansible.posix.sysctl:
-    name: net.ipv4.ip_nonlocal_bind
-    value: "1"
-    sysctl_set: yes
-    state: present
 
 - name: Configure firewall
   ansible.builtin.include_tasks: firewall.yml
