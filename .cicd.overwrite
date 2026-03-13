@@ -15,6 +15,12 @@ platforms:
   sles16:
     supported: true
     ci: false
+  opensuse15:
+    supported: true
+    ci: true
+  opensuse16:
+    supported: true
+    ci: true
   ubuntu2004:
     supported: true
     ci: true
@@ -29,6 +35,9 @@ molecule:
   prepare:
    vars:
      prepare_firewall: true
+  requirements:
+    roles_extra:
+      - deitkrachten.sysctl
   nodes:
     - name: master
       groups:
