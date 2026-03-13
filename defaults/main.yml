@@ -30,3 +30,7 @@ keepalived_vrrp_scripts:
       script: '"/bin/pidof haproxy"'
       interval: 5
       init_fail:
+
+# Sysctl settings
+keepalived_sysctl_settings:
+  'net.ipv4.ip_nonlocal_bind': '1'  # Allow binding on non-local addresses

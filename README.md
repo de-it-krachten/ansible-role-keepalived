@@ -33,6 +33,9 @@ Supported platforms
 - AlmaLinux 9
 - AlmaLinux 10
 - SUSE Linux Enterprise 15<sup>1</sup>
+- SUSE Linux Enterprise 16<sup>1</sup>
+- openSUSE Leap 15
+- openSUSE Leap 16
 - Debian 11 (Bullseye)
 - Debian 12 (Bookworm)
 - Debian 13 (Trixie)
@@ -42,6 +45,7 @@ Supported platforms
 
 Note:
 <sup>1</sup> : no automated testing is performed on these platforms
+
 
 ## Role Variables
 ### defaults/main.yml
@@ -76,6 +80,10 @@ keepalived_vrrp_scripts:
       script: '"/bin/pidof haproxy"'
       interval: 5
       init_fail:
+
+# Sysctl settings
+keepalived_sysctl_settings:
+  'net.ipv4.ip_nonlocal_bind': '1'  # Allow binding on non-local addresses
 </pre></code>
 
 ### defaults/family-Debian.yml
