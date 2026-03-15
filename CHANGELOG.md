@@ -1,3 +1,15 @@
+# [1.9.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.8.0...v1.9.0) (2026-03-15)
+
+
+### Bug Fixes
+
+* Move sysctl settings to external role ([6db6217](https://github.com/de-it-krachten/ansible-role-keepalived/commit/6db6217c4634462bacb9f77eddfa9b52fcfcefc5))
+
+
+### Features
+
+* Drop support for SUSE Linux Enterprise 15 ([68d42ad](https://github.com/de-it-krachten/ansible-role-keepalived/commit/68d42ad97fe4fbbb79a7d771e43df3881c51e9db))
+
 # [1.8.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.7.0...v1.8.0) (2026-03-13)
 
 
