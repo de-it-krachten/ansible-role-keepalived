@@ -7,13 +7,13 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions master
       assert:
         that:
-          - "'172.17.0.100' in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_facts.all_ipv4_addresses"
 
 - name: Verify backup node
   hosts: keepalived_backup
@@ -22,13 +22,13 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions backup
       assert:
         that:
-          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' not in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_facts.all_ipv4_addresses"
 
 
 - name: Fail-over
@@ -53,13 +53,13 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions master
       assert:
         that:
-          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' not in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_facts.all_ipv4_addresses"
 
 
 - name: Verify backup node
@@ -69,13 +69,13 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions backup
       assert:
         that:
-          - "'172.17.0.100' in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_facts.all_ipv4_addresses"
 
 
 - name: Fall-back
@@ -100,13 +100,13 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions master
       assert:
         that:
-          - "'172.17.0.100' in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' in ansible_facts.all_ipv4_addresses"
 
 
 - name: Verify backup node
@@ -116,10 +116,10 @@
 
     - name: Show all IP addresses
       debug:
-        var: ansible_all_ipv4_addresses
+        var: ansible_facts.all_ipv4_addresses
 
     - name: Assertions backup
       assert:
         that:
-          - "'172.17.0.100' not in ansible_all_ipv4_addresses"
-          - "'172.17.0.200' not in ansible_all_ipv4_addresses"
+          - "'172.17.0.100' not in ansible_facts.all_ipv4_addresses"
+          - "'172.17.0.200' not in ansible_facts.all_ipv4_addresses"

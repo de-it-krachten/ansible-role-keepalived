@@ -45,7 +45,7 @@ vrrp_instance {{ instance.name }} {
 {% endif %}
 
   virtual_ipaddress {
-    {{ instance.cluster_ip }} dev {{ instance.interface|default(ansible_default_ipv4.interface) }}
+    {{ instance.cluster_ip }} dev {{ instance.interface|default(ansible_facts.default_ipv4.interface) }}
   }
 
   # notify_master "/opt/keepalived/bin/haproxy-restart.sh"

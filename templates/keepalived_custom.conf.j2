@@ -1,6 +1,6 @@
 vrrp_instance {{ item.name }} {
 
-  interface {{ item.interface|default(ansible_default_ipv4.interface) }}
+  interface {{ item.interface|default(ansible_facts.default_ipv4.interface) }}
   virtual_router_id {{ item.virtual_router_id }}
 {% if keepalived_role == "master" %}
   state MASTER
@@ -21,7 +21,7 @@ vrrp_instance {{ item.name }} {
 {% endif %}
 
   virtual_ipaddress {
-    {{ item.cluster_ip }} dev {{ item.interface|default(ansible_default_ipv4.interface) }}
+    {{ item.cluster_ip }} dev {{ item.interface|default(ansible_facts.default_ipv4.interface) }}
   }
 
   # notify_master "/opt/keepalived/bin/haproxy-restart.sh"
