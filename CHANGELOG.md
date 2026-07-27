@@ -1,3 +1,16 @@
+# [1.10.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.9.0...v1.10.0) (2026-07-27)
+
+
+### Bug Fixes
+
+* Refactor due to legacy fact renaming ([8227d80](https://github.com/de-it-krachten/ansible-role-keepalived/commit/8227d80a34c3a880983358f24de85a036570f667))
+* Standarize vars.yml ([d93a030](https://github.com/de-it-krachten/ansible-role-keepalived/commit/d93a03043e2f40a7d7d7608c41684ea347363a5c))
+
+
+### Features
+
+* Added support for Ubuntu 26.04 LTS ([54dd44e](https://github.com/de-it-krachten/ansible-role-keepalived/commit/54dd44e0502a474d0b3f440a5c9d363a5a4e65fc))
+
 # [1.9.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.8.0...v1.9.0) (2026-03-15)
 
 
