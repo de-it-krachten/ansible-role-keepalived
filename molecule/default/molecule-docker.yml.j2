@@ -34,9 +34,9 @@ platforms:
 {% for platform in MOLECULE_DISTROS %}
   - name: keepalived-{{ platform.name }}-master
     image: "{{ platform.image }}"
-{% if platform.cap_add is defined %}
-    cap_add:
-{% for cap in platform.cap_add %}
+{% if platform.capabilities is defined %}
+    capabilities:
+{% for cap in platform.capabilities %}
       - {{ cap }}
 {% endfor %}
 {% endif %}
@@ -74,14 +74,15 @@ platforms:
     cgroupns_mode: {{ platform.cgroupns_mode }}
 {% endif %}
     privileged: {{ platform.privileged | default(True) }}
+    capabilities: {{ platform.capabilities | default([]) }}
     pre_build_image: {{ platform.pre_build_image | default(True) }}
     dockerfile: Dockerfile.{{ platform.name }}.j2
     groups: ['keepalived_master']
   - name: keepalived-{{ platform.name }}-backup
     image: "{{ platform.image }}"
-{% if platform.cap_add is defined %}
-    cap_add:
-{% for cap in platform.cap_add %}
+{% if platform.capabilities is defined %}
+    capabilities:
+{% for cap in platform.capabilities %}
       - {{ cap }}
 {% endfor %}
 {% endif %}
@@ -119,6 +120,7 @@ platforms:
     cgroupns_mode: {{ platform.cgroupns_mode }}
 {% endif %}
     privileged: {{ platform.privileged | default(True) }}
+    capabilities: {{ platform.capabilities | default([]) }}
     pre_build_image: {{ platform.pre_build_image | default(True) }}
     dockerfile: Dockerfile.{{ platform.name }}.j2
     groups: ['keepalived_backup']
