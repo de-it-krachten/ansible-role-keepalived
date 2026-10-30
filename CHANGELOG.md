@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.10.0...v1.11.0) (2026-10-30)
+
+
+### Features
+
+* Drop support for Debian 11 (Bullseye) ([d0ec93a](https://github.com/de-it-krachten/ansible-role-keepalived/commit/d0ec93a438c0bcb72b1009c46bbf44c18c26f053))
+
 # [1.10.0](https://github.com/de-it-krachten/ansible-role-keepalived/compare/v1.9.0...v1.10.0) (2026-07-27)
 
 
